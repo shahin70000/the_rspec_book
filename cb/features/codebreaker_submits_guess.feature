@@ -7,6 +7,11 @@ Feature: code-breaker submit guess
 	that matches the number but not the position of a number in the secret code, 
 	the mark includes one - sign.
 
+	Each position in the secret code can be matched once. For example, a 
+	guess of 1134 against a secret code of 1234 would get there plus signs: one 
+	for each of the exact matches in the first, third and fourth positions. The 
+	number match in the second position would be ignored.
+
 	As a code-breaker
 	I want to submit guess
 	So that I can try to break the code
@@ -43,4 +48,14 @@ Feature: code-breaker submit guess
 		| 1234 | 1234  | ++++ |  
 		| 1234 | 1243  | ++-- |  
 		| 1234 | 1423  | +--- |  
-		| 1234 | 4321  | ---- |  
+		| 1234 | 4321  | ---- | 
+
+		Scenarios: match with duplicates
+		| code | guess | mark |  
+		| 1234 | 1155  | +    |  
+		| 1234 | 5115  | -    |  
+		| 1134 | 1155  | ++   |  
+		| 1134 | 5115  | +-   |  
+		| 1134 | 5511  | --   |  
+		| 1134 | 1115  | ++   |  
+		| 1134 | 5111  | +-   |  
